@@ -1,0 +1,33 @@
+.md-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
+.md-file { flex-wrap: nowrap; }
+.md-fname { gap: 8px; min-width: 0; flex-wrap: nowrap; }
+.md-fname b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md-fields .field.md-wide { grid-column: 1 / -1; }
+.md-fields .field .faint { font-weight: 450; }
+.md-fields .input.md-was { border-color: var(--accent); }
+.md-custom .md-crow { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.md-custom .md-key { font-family: var(--mono); font-size: 12.5px; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md-custom .md-crow.gone .input { text-decoration: line-through; opacity: .5; }
+.md-extra { display: grid; gap: 10px; padding: 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+.md-xrow { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.md-xmp { max-height: 260px; overflow: auto; font-size: 11.5px; margin: 0; background: var(--surface); }
+.md-actions { gap: 10px; }
+.md-actions .btn { flex: 1 1 220px; }
+.md-strip { color: var(--danger); border-color: var(--danger-soft); }
+.md-strip:hover:not(:disabled) { background: var(--danger-soft) !important; }
+.md-note { margin: 10px 2px 0; }
+
+.md-reveal { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.md-reveal li { display: grid; gap: 1px; padding: 9px 11px; border-radius: 10px; background: var(--surface-2); border-left: 3px solid var(--warn); }
+.md-reveal li b { font-size: 12px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.md-reveal li span { overflow-wrap: anywhere; }
+.md-reveal li.clean { border-left-color: var(--ok); }
+#stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#stats .stat { padding: 10px 12px; }
+#stats .stat b { font-size: 18px; }
+.md-why ul { margin: 0 0 10px; padding-left: 18px; display: grid; gap: 6px; color: var(--text-2); font-size: 13.5px; }
+.md-why b { color: var(--text); }
+
+@media (max-width: 860px) { .md-layout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { .md-custom .md-crow { grid-template-columns: minmax(0, 1fr) auto; } .md-custom .md-key { grid-column: 1 / -1; } }
+.card h2.mt { margin-top: 20px; }

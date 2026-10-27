@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>PDF Metadata — View, Edit &amp; Remove Hidden PDF Info, Free &amp; Private | S3eidat Tools</title>
+<meta name="description" content="See the hidden info inside a PDF (author, software, dates, XMP, custom fields), edit any of it, or strip everything in one click. Runs in your browser, nothing uploaded.">
+<meta property="og:title" content="PDF Metadata — see and remove hidden PDF info">
+<meta property="og:description" content="View, edit or strip a PDF's author, dates, software and XMP metadata. Runs 100% in your browser.">
+<link rel="icon" href="kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="kit/kit.js"></script>
+<script src="lib/pdf-lib.min.js"></script>
+<!--s3:seo-->
+<link rel="canonical" href="https://s3eidat.github.io/pdf-metadata/">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d0f12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="S3eidat Tools">
+<meta property="og:url" content="https://s3eidat.github.io/pdf-metadata/">
+<meta property="og:image" content="https://s3eidat.github.io/pdf-metadata/screenshot.png">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF Metadata — See and remove hidden PDF info">
+<meta name="twitter:description" content="See and remove hidden PDF info. Free, private and runs 100% in your browser: no sign-up, no uploads.">
+<meta name="twitter:image" content="https://s3eidat.github.io/pdf-metadata/screenshot.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "PDF Metadata", "url": "https://s3eidat.github.io/pdf-metadata/", "description": "See and remove hidden PDF info. Free, private and runs 100% in your browser: no sign-up, no uploads.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "image": "https://s3eidat.github.io/pdf-metadata/screenshot.png", "author": {"@type": "Person", "name": "s3eidat", "url": "https://github.com/s3eidat"}}</script>
+<!--/s3:seo-->
+</head>
+<body data-tool="pdf-metadata">
+<main class="s3-main">
+  <section class="s3-hero">
+    <h1>PDF Metadata</h1>
+    <p>See what a PDF says about you before you send it: author, software, dates, edit history. Edit any of it, or strip it all in one click. The file never leaves this device.</p>
+  </section>
+
+  <section class="card" id="dropCard">
+    <label class="drop" id="drop">
+      <input type="file" accept=".pdf,application/pdf" hidden>
+      <svg class="i"><use href="#i-upload"/></svg>
+      <b>Drop a PDF here</b>
+      <span>or click to choose one</span>
+    </label>
+  </section>
+
+  <div class="md-layout" id="work" hidden>
+    <section class="card">
+      <div class="row between md-file">
+        <div class="row md-fname"><svg class="i"><use href="#i-file"/></svg><b id="fname"></b></div>
+        <button class="btn ghost small" id="change"><svg class="i"><use href="#i-refresh"/></svg>Another file</button>
+      </div>
+
+      <h2 class="mt">Document info</h2>
+      <div class="grid-2 md-fields" id="fields"></div>
+
+      <div id="customBox" hidden>
+        <h2 class="mt">Custom fields <small>added by the app that made the file</small></h2>
+        <div class="stack md-custom" id="custom"></div>
+      </div>
+
+      <div class="md-extra mt">
+        <div class="md-xrow">
+          <label class="check"><input type="checkbox" id="rmXmp"> Remove XMP metadata <span class="faint" id="xmpInfo"></span></label>
+          <button class="btn ghost small" id="xmpToggle" hidden>Show XML</button>
+        </div>
+        <pre class="out md-xmp" id="xmpText" hidden></pre>
+        <label class="check"><input type="checkbox" id="rmId"> Remove the document ID <span class="faint" id="idInfo"></span></label>
+      </div>
+
+      <div class="row mt md-actions">
+        <button class="btn big md-strip" id="strip"><svg class="i"><use href="#i-trash"/></svg>Strip everything &amp; download</button>
+        <button class="btn primary big" id="save"><svg class="i"><use href="#i-download"/></svg>Save changes</button>
+      </div>
+      <p class="faint md-note">The saved file is rewritten from scratch, so leftovers from earlier edits that were still hidden inside it are dropped too. Pages, text and images are not changed.</p>
+    </section>
+
+    <aside class="stack">
+      <section class="card">
+        <h2>What this file reveals</h2>
+        <ul class="md-reveal" id="reveal"></ul>
+        <div class="stats mt" id="stats"></div>
+      </section>
+      <section class="card md-why">
+        <h2>Why it matters</h2>
+        <ul>
+          <li><b>Author</b> is often your full name or your computer's login name, filled in silently by Word, Pages or Acrobat.</li>
+          <li><b>Creator / Producer</b> name the software and version you use.</li>
+          <li><b>Dates</b> show when the file was really made and edited, including your time zone.</li>
+          <li><b>XMP</b> can hold an edit history and IDs that link this file to earlier versions of it.</li>
+          <li><b>Custom fields</b> can carry a company name, a template, or the original file path.</li>
+        </ul>
+        <p class="faint">Not covered: pictures inside the PDF can carry their own camera data (EXIF). This tool doesn't rewrite images.</p>
+      </section>
+    </aside>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
